@@ -3,15 +3,19 @@ import { Card, CardContent, Typography, CardActionArea } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const cardStyles = {
-  width: "300px",
+  width: "100%",
   marginBottom: "16px",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
   justifyContent: "center",
+  WebkitBackdropFilter: "blur(10px)", // Safari 9+
+  backdropFilter: "blur(40px)", // Chrome and Opera
+  boxShadow: "0px 10px 15px 10px rgba(0, 0, 0, 0.15)",
+  backgroundColor: "rgba(228, 228, 228, 0.15)",
 };
 
-const BudgetCard = ({ title, selected, to }) => {
+const BudgetCard = ({ title }) => {
   const navigate = useNavigate();
   const handleBudgetClick = (budget) => {
     navigate("/hotel-page");
@@ -21,7 +25,8 @@ const BudgetCard = ({ title, selected, to }) => {
       style={{
         ...cardStyles,
         cursor: "pointer",
-        backgroundColor: "#F0F0F0",
+        borderRadius: "10px",
+        height: "100px",
       }}
       onClick={() => handleBudgetClick()}
     >
@@ -44,11 +49,13 @@ const Status = () => {
         flexDirection: "column",
         alignItems: "center",
         marginTop: 50,
+        textAlign: "left",
       }}
     >
       <BudgetCard title="High Budget" />
       <BudgetCard title="Medium Budget" />
       <BudgetCard title="Low Budget" />
+      <Typography variant="h3">Select Your Budget</Typography>
     </div>
   );
 };

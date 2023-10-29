@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 function CustomAppBar() {
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ backgroundColor: "#121212" }}>
       <Toolbar>
         <Typography
           variant="h6"
