@@ -52,10 +52,11 @@ const Status = () => {
         textAlign: "left",
       }}
     >
+      <Typography variant="h3">Select Your Budget</Typography>
+
       <BudgetCard title="High Budget" />
       <BudgetCard title="Medium Budget" />
       <BudgetCard title="Low Budget" />
-      <Typography variant="h3">Select Your Budget</Typography>
     </div>
   );
 };

@@ -20,8 +20,10 @@ import {
   Box,
 } from "@mui/material";
 import { hotelData } from "../const/HotelData";
+import { useNavigate } from "react-router-dom";
 
 const HotelPage = () => {
+  const navigate = useNavigate();
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [isCompareOpen, setCompareOpen] = useState(false);
   const [selectedHotel, setSelectedHotel] = useState(0);
@@ -96,23 +98,70 @@ const HotelPage = () => {
         </DialogContent>
       </Dialog>
       {hotelData.map((hotel, index) => (
-        <Card key={index} sx={{ margin: "10px 0", backgroundColor: "#f7f7f7" }}>
+        <Card key={index} sx={{ margin: "10px 0", backgroundColor: "#f0f0f0" }}>
           <CardContent
             sx={{ display: "flex", justifyContent: "space-between" }}
           >
-            <Box>
+            <Box sx={{ display: "flex", gap: 1 }}>
+              <img
+                style={{
+                  height: "160px",
+                  width: "160px",
+                }}
+                src="https://images.pexels.com/photos/4916537/pexels-photo-4916537.jpeg?auto=compress&cs=tinysrgb&w=600"
+                alt=""
+              />
+              <img
+                style={{
+                  height: "160px",
+                  width: "160px",
+                }}
+                src="https://images.pexels.com/photos/6636252/pexels-photo-6636252.jpeg?auto=compress&cs=tinysrgb&w=600"
+                alt=""
+              />
+              <img
+                style={{
+                  height: "160px",
+                  width: "160px",
+                }}
+                src="https://images.pexels.com/photos/6782567/pexels-photo-6782567.jpeg?auto=compress&cs=tinysrgb&w=600"
+                alt=""
+              />
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+              }}
+            >
               <Typography variant="h4">{hotel.name}</Typography>
               <Typography variant="h6">Rating: {hotel.rating}</Typography>
-            </Box>
-            <Box>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => toggleMenu(index)}
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 1,
+                }}
               >
-                View Menu
-              </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  sx={{ backgroundColor: "#151515" }}
+                  onClick={() => toggleMenu(index)}
+                >
+                  View Menu
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  sx={{ backgroundColor: "#151515" }}
+                  onClick={() => navigate("/details")}
+                >
+                  View Details
+                </Button>
+              </Box>
             </Box>
+            <Box></Box>
           </CardContent>
         </Card>
       ))}

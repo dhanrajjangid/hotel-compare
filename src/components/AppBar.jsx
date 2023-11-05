@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 function CustomAppBar() {
   return (
-    <AppBar position="static" sx={{ backgroundColor: "#121212" }}>
+    <AppBar position="static" sx={{ backgroundColor: "#151515" }}>
       <Toolbar>
         <Typography
           variant="h6"
@@ -29,6 +29,9 @@ function CustomAppBar() {
         </Button>
         <Button component={Link} to="/hotel-page" color="inherit">
           Hotel Page
+        </Button>
+        <Button component={Link} to="/details" color="inherit">
+          Details
         </Button>
       </Toolbar>
     </AppBar>

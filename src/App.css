@@ -5,8 +5,15 @@ body {
 }
 
 .city-select {
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.city-cards-home {
+  background-color: #f0f0f0;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   padding: 20px;
-  border-radius: 10px;
+  background-blend-mode: darken;
 }
