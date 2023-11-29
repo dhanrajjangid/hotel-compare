@@ -13,14 +13,19 @@ import {
   Box,
 } from "@mui/material";
 import { useLocation } from "react-router-dom";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const HotelDetails = () => {
   const { state } = useLocation();
   const [hotelData, setHotelData] = useState({});
   const [menuItems, setMenuItems] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchHotels = async () => {
+      setLoading(true);
+
       try {
         const response = await fetch(
           "https://crud-template-nodejs.vercel.app/hotel/getHotels"
@@ -28,8 +33,10 @@ const HotelDetails = () => {
         const data = await response.json();
         setHotelData(data[state?.i]);
         setMenuItems(data[state?.i].menu);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching hotels:", error);
+        setLoading(false);
       }
     };
 
@@ -49,65 +56,76 @@ const HotelDetails = () => {
   ];
 
   return (
-    <Card
-      sx={{
-        marginTop: 5,
-        padding: 1,
-      }}
-    >
-      <Box
+    <>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}
+        onClick={handleClose}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+      <Card
         sx={{
-          display: "flex",
-          gap: 1,
-          width: "100%",
-          height: "400px",
-          overflowX: "auto",
+          marginTop: 5,
+          padding: 1,
         }}
       >
-        <img
-          alt="Hotel"
-          src="https://images.pexels.com/photos/6782567/pexels-photo-6782567.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-        />
-        <img
-          alt="Hotel"
-          src="https://images.pexels.com/photos/7061068/pexels-photo-7061068.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-        />
-        <img
-          alt="Hotel"
-          src="https://images.pexels.com/photos/6903157/pexels-photo-6903157.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-        />
-      </Box>
-      <CardContent>
-        <Typography variant="h5" component="div">
-          {hotelData?.name}
-        </Typography>
-        <Typography variant="subtitle1">Rating: {hotelData?.rating}</Typography>
-        <Typography variant="subtitle1">
-          Address: {hotelData?.address}
-        </Typography>
-        <Typography variant="h6" gutterBottom>
-          Menu
-        </Typography>
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Item</TableCell>
-                <TableCell>Price</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {menuItems?.map((item, index) => (
-                <TableRow key={index}>
-                  <TableCell>{item?.name}</TableCell>
-                  <TableCell>{item?.price}</TableCell>
+        <Box
+          sx={{
+            display: "flex",
+            gap: 1,
+            width: "100%",
+            height: "400px",
+            overflowX: "auto",
+          }}
+        >
+          <img
+            alt="Hotel"
+            src="https://images.pexels.com/photos/6782567/pexels-photo-6782567.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+          />
+          <img
+            alt="Hotel"
+            src="https://images.pexels.com/photos/7061068/pexels-photo-7061068.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+          />
+          <img
+            alt="Hotel"
+            src="https://images.pexels.com/photos/6903157/pexels-photo-6903157.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+          />
+        </Box>
+        <CardContent>
+          <Typography variant="h5" component="div">
+            {hotelData?.name}
+          </Typography>
+          <Typography variant="subtitle1">
+            Rating: {hotelData?.rating}
+          </Typography>
+          <Typography variant="subtitle1">
+            Address: {hotelData?.address}
+          </Typography>
+          <Typography variant="h6" gutterBottom>
+            Menu
+          </Typography>
+          <TableContainer component={Paper}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Item</TableCell>
+                  <TableCell>Price</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </CardContent>
-    </Card>
+              </TableHead>
+              <TableBody>
+                {menuItems?.map((item, index) => (
+                  <TableRow key={index}>
+                    <TableCell>{item?.name}</TableCell>
+                    <TableCell>{item?.price}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </CardContent>
+      </Card>
+    </>
   );
 };
 
