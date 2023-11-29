@@ -73,11 +73,7 @@ const HotelPage = () => {
 
   return (
     <div>
-      <Backdrop
-        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={loading}
-        onClick={handleClose}
-      >
+      <Backdrop sx={{ color: "#fff", zIndex: 10 }} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
       <Box marginTop={5} display={"flex"} justifyContent={"center"}>
