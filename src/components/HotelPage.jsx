@@ -19,7 +19,7 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import { hotelData } from "../const/HotelData";
+// import { hotelData } from "../const/HotelData";
 import { useNavigate } from "react-router-dom";
 
 const HotelPage = () => {
@@ -28,13 +28,32 @@ const HotelPage = () => {
   const [isCompareOpen, setCompareOpen] = useState(false);
   const [selectedHotel, setSelectedHotel] = useState(0);
   const [dishNames, setDishNames] = useState([]);
+  const [hotelData, setHotelData] = useState([]);
 
   useEffect(() => {
-    let newArr = [...hotelData[0].menu, ...hotelData[1].menu];
-    let myArray = newArr?.map((item) => item.name);
-    myArray = [...new Set(myArray)];
-    setDishNames(myArray);
+    if (hotelData.length > 0) {
+      let newArr = [...hotelData[0].menu, ...hotelData[1].menu];
+      let myArray = newArr?.map((item) => item.name);
+      myArray = [...new Set(myArray)];
+      setDishNames(myArray);
+    }
   }, [hotelData]);
+
+  useEffect(() => {
+    const fetchHotels = async () => {
+      try {
+        const response = await fetch(
+          "https://crud-template-nodejs.vercel.app/hotel/getHotels"
+        );
+        const data = await response.json();
+        setHotelData(data);
+      } catch (error) {
+        console.error("Error fetching hotels:", error);
+      }
+    };
+
+    fetchHotels();
+  }, []);
 
   const toggleMenu = (hotel) => {
     setSelectedHotel(hotel);
@@ -97,7 +116,7 @@ const HotelPage = () => {
           </TableContainer>
         </DialogContent>
       </Dialog>
-      {hotelData.map((hotel, index) => (
+      {hotelData?.map((hotel, index) => (
         <Card key={index} sx={{ margin: "10px 0", backgroundColor: "#f0f0f0" }}>
           <CardContent
             sx={{ display: "flex", justifyContent: "space-between" }}
@@ -135,8 +154,8 @@ const HotelPage = () => {
                 justifyContent: "center",
               }}
             >
-              <Typography variant="h4">{hotel.name}</Typography>
-              <Typography variant="h6">Rating: {hotel.rating}</Typography>
+              <Typography variant="h4">{hotel?.name}</Typography>
+              <Typography variant="h6">Rating: {hotel?.rating}</Typography>
               <Box
                 sx={{
                   display: "flex",
@@ -155,7 +174,13 @@ const HotelPage = () => {
                   variant="contained"
                   color="primary"
                   sx={{ backgroundColor: "#151515" }}
-                  onClick={() => navigate("/details")}
+                  onClick={() =>
+                    navigate("/details", {
+                      state: {
+                        i: index,
+                      },
+                    })
+                  }
                 >
                   View Details
                 </Button>

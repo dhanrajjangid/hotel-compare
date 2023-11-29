@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -12,16 +12,37 @@ import {
   Paper,
   Box,
 } from "@mui/material";
+import { useLocation } from "react-router-dom";
 
 const HotelDetails = () => {
+  const { state } = useLocation();
+  const [hotelData, setHotelData] = useState({});
+  const [menuItems, setMenuItems] = useState([]);
+
+  useEffect(() => {
+    const fetchHotels = async () => {
+      try {
+        const response = await fetch(
+          "https://crud-template-nodejs.vercel.app/hotel/getHotels"
+        );
+        const data = await response.json();
+        setHotelData(data[state?.i]);
+        setMenuItems(data[state?.i].menu);
+      } catch (error) {
+        console.error("Error fetching hotels:", error);
+      }
+    };
+
+    fetchHotels();
+  }, []);
   // Dummy data for the hotel and menu
-  const hotelData = {
+  const hotelData1 = {
     name: "Sample Hotel",
     rating: 4.5,
     address: "123 Main Street, City, Country",
   };
 
-  const menuItems = [
+  const menuItems1 = [
     { name: "Dish 1", price: "$10" },
     { name: "Dish 2", price: "$15" },
     { name: "Dish 3", price: "$12" },
@@ -58,11 +79,11 @@ const HotelDetails = () => {
       </Box>
       <CardContent>
         <Typography variant="h5" component="div">
-          {hotelData.name}
+          {hotelData?.name}
         </Typography>
-        <Typography variant="subtitle1">Rating: {hotelData.rating}</Typography>
+        <Typography variant="subtitle1">Rating: {hotelData?.rating}</Typography>
         <Typography variant="subtitle1">
-          Address: {hotelData.address}
+          Address: {hotelData?.address}
         </Typography>
         <Typography variant="h6" gutterBottom>
           Menu
@@ -76,10 +97,10 @@ const HotelDetails = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {menuItems.map((item, index) => (
+              {menuItems?.map((item, index) => (
                 <TableRow key={index}>
-                  <TableCell>{item.name}</TableCell>
-                  <TableCell>{item.price}</TableCell>
+                  <TableCell>{item?.name}</TableCell>
+                  <TableCell>{item?.price}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
