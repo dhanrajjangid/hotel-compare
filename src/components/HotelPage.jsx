@@ -51,10 +51,10 @@ const HotelPage = () => {
         );
         const data = await response.json();
         setHotelData(data);
-        setLoading(true);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching hotels:", error);
-        setLoading(true);
+        setLoading(false);
       }
     };
 
