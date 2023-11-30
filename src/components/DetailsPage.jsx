@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   Card,
   CardContent,
@@ -15,8 +15,11 @@ import {
 import { useLocation } from "react-router-dom";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import { BudgetContext } from "../context/budgetContext";
 
 const HotelDetails = () => {
+  const { budget } = useContext(BudgetContext);
+
   const { state } = useLocation();
   const [hotelData, setHotelData] = useState({});
   const [menuItems, setMenuItems] = useState([]);
@@ -28,7 +31,7 @@ const HotelDetails = () => {
 
       try {
         const response = await fetch(
-          "https://crud-template-nodejs.vercel.app/hotel/getHotels"
+          `https://crud-template-nodejs.vercel.app/hotel/getHotels?status=${budget}`
         );
         const data = await response.json();
         setHotelData(data[state?.i]);
@@ -41,7 +44,7 @@ const HotelDetails = () => {
     };
 
     fetchHotels();
-  }, []);
+  }, [budget]);
   // Dummy data for the hotel and menu
   const hotelData1 = {
     name: "Sample Hotel",
@@ -93,11 +96,20 @@ const HotelDetails = () => {
             {hotelData?.name}
           </Typography>
           <Typography variant="subtitle1">
-            Rating: {hotelData?.rating}
+            Cleanliness: {hotelData?.cleanliness}
           </Typography>
           <Typography variant="subtitle1">
-            Address: {hotelData?.address}
+            Service: {hotelData?.service}
           </Typography>
+          <Typography variant="subtitle1">Taste: {hotelData?.taste}</Typography>
+          <Typography variant="subtitle1">
+            Budget: {hotelData?.status}
+          </Typography>
+          {/* <Typography variant="subtitle1">
+            Address: {hotelData?.address}
+          </Typography> */}
+          <hr />
+          <br />
           <Typography variant="h6" gutterBottom>
             Menu
           </Typography>

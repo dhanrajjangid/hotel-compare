@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   Button,
   Card,
@@ -23,6 +23,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import { BudgetContext } from "../context/budgetContext";
 
 const HotelPage = () => {
   const navigate = useNavigate();
@@ -32,6 +33,7 @@ const HotelPage = () => {
   const [dishNames, setDishNames] = useState([]);
   const [hotelData, setHotelData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { budget } = useContext(BudgetContext);
 
   useEffect(() => {
     if (hotelData.length > 0) {
@@ -47,7 +49,7 @@ const HotelPage = () => {
       setLoading(true);
       try {
         const response = await fetch(
-          "https://crud-template-nodejs.vercel.app/hotel/getHotels"
+          `https://crud-template-nodejs.vercel.app/hotel/getHotels?status=${budget}`
         );
         const data = await response.json();
         setHotelData(data);
@@ -59,7 +61,7 @@ const HotelPage = () => {
     };
 
     fetchHotels();
-  }, []);
+  }, [budget]);
 
   const toggleMenu = (hotel) => {
     setSelectedHotel(hotel);

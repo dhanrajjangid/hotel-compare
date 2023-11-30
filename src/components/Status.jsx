@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { Card, CardContent, Typography, CardActionArea } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { BudgetContext } from "../context/budgetContext";
 
 const cardStyles = {
   width: "100%",
@@ -15,9 +16,11 @@ const cardStyles = {
   backgroundColor: "rgba(228, 228, 228, 0.15)",
 };
 
-const BudgetCard = ({ title }) => {
+const BudgetCard = ({ title, bar }) => {
   const navigate = useNavigate();
-  const handleBudgetClick = (budget) => {
+  const { updateBudget } = useContext(BudgetContext);
+  const handleBudgetClick = (bar) => {
+    updateBudget(bar);
     navigate("/hotel-page");
   };
   return (
@@ -28,7 +31,7 @@ const BudgetCard = ({ title }) => {
         borderRadius: "10px",
         height: "100px",
       }}
-      onClick={() => handleBudgetClick()}
+      onClick={() => handleBudgetClick(bar)}
     >
       <CardActionArea>
         <CardContent>
@@ -54,9 +57,9 @@ const Status = () => {
     >
       <Typography variant="h3">Select Your Budget</Typography>
 
-      <BudgetCard title="High Budget" />
-      <BudgetCard title="Medium Budget" />
-      <BudgetCard title="Low Budget" />
+      <BudgetCard title="High Budget" bar="high" />
+      <BudgetCard title="Medium Budget" bar="medium" />
+      <BudgetCard title="Low Budget" bar="low" />
     </div>
   );
 };
