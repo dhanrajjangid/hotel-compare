@@ -119,6 +119,9 @@ const HotelDetails = () => {
                 <TableRow>
                   <TableCell>Item</TableCell>
                   <TableCell>Price</TableCell>
+                  <TableCell>Taste Rating</TableCell>
+                  <TableCell>Price Rarting</TableCell>
+                  <TableCell>Cleanliness Rarting</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -126,6 +129,9 @@ const HotelDetails = () => {
                   <TableRow key={index}>
                     <TableCell>{item?.name}</TableCell>
                     <TableCell>{item?.price}</TableCell>
+                    <TableCell>{item?.taste_rating}</TableCell>
+                    <TableCell>{item?.price_rating}</TableCell>
+                    <TableCell>{item?.cleanliness_rating}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

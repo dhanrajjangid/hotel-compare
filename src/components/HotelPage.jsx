@@ -38,7 +38,7 @@ const HotelPage = () => {
   useEffect(() => {
     if (hotelData.length > 0) {
       let newArr = [...hotelData[0].menu, ...hotelData[1].menu];
-      let myArray = newArr?.map((item) => item.name);
+      let myArray = newArr?.map((item) => item?.name?.toLowerCase());
       myArray = [...new Set(myArray)];
       setDishNames(myArray);
     }
@@ -113,12 +113,14 @@ const HotelPage = () => {
                       {dish}
                     </TableCell>
                     <TableCell>
-                      {hotelData[0]?.menu?.find((item) => item.name === dish)
-                        ?.price ?? "X"}
+                      {hotelData[0]?.menu?.find(
+                        (item) => item?.name?.toLowerCase() === dish
+                      )?.price ?? "X"}
                     </TableCell>
                     <TableCell>
-                      {hotelData[1]?.menu?.find((item) => item.name === dish)
-                        ?.price ?? "X"}
+                      {hotelData[1]?.menu?.find(
+                        (item) => item?.name?.toLowerCase() === dish
+                      )?.price ?? "X"}
                     </TableCell>
                   </TableRow>
                 ))}
